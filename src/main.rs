@@ -1,3 +1,5 @@
+// needs to be run as root, as to be able to stop the services (and perform a restart)
+
 use chrono::NaiveTime; // cargo add chrono
 use clap::{Parser, error}; // cargo add clap --features derive
 use std::fs;
@@ -175,13 +177,40 @@ fn main() {
         services
     };
 
-    for service in services {
-        println!("service: {service}");
+    // stop the services
+    for service in &services {
+        println!("stopping: {service}");
+
+        let cmd = match Command::new("systemctl").args(["stop", service]).output() {
+            Ok(v) => v,
+            Err(err) => {
+                logerr(
+                    error_folder,
+                    &format!(
+                        "could not call systemd to stop service `{}`: {}",
+                        service, err
+                    ),
+                );
+                continue;
+            }
+        };
+
+        if !cmd.status.success() {
+            logerr(
+                error_folder,
+                &format!(
+                    "could not stop service `{}`: {}; stderr=`{}`",
+                    service,
+                    cmd.status,
+                    String::from_utf8_lossy(&cmd.stderr)
+                ),
+            )
+        }
     }
 
-    // TODO shutdown services
+    // TODO sync to server
 
-    // TODO sync
+    // TODO sync filesystem
 
     // TODO reboot
 }
