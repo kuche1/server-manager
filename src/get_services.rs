@@ -36,7 +36,7 @@ pub fn main(error_folder: &String, services_prefix: &String) -> Vec<String> {
     //             ),
     //         )
     //     }
-    term::exec(
+    let cmd = term::exec(
         error_folder,
         "systemctl",
         vec![
@@ -48,6 +48,14 @@ pub fn main(error_folder: &String, services_prefix: &String) -> Vec<String> {
         ],
         "get service names",
     );
+
+    let cmd = match cmd {
+        Some(v) => v,
+        None => {
+            log::err(&error_folder, "unreachable");
+            return vec![];
+        }
+    };
 
     let data = cmd.stdout;
     let data = String::from_utf8_lossy(&data);

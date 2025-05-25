@@ -59,5 +59,5 @@ pub fn main(
             dest_path,
         ],
         &format!("sync: source_path=`{source_path}`, dest_path=`{dest_path}`",),
-    )
+    );
 }

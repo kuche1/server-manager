@@ -1,8 +1,8 @@
 use crate::log;
 
-use std::process::Command;
+use std::process::{Command, Output};
 
-pub fn exec(error_folder: &String, command: &str, args: Vec<&str>, info: &str) -> Option<()> {
+pub fn exec(error_folder: &String, command: &str, args: Vec<&str>, info: &str) -> Option<Output> {
     let cmd = match Command::new(command).args(args).output() {
         Ok(v) => v,
         Err(err) => {
@@ -27,5 +27,5 @@ pub fn exec(error_folder: &String, command: &str, args: Vec<&str>, info: &str) -
         return None;
     }
 
-    return Some(());
+    return Some(cmd);
 }

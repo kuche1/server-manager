@@ -1,4 +1,4 @@
-// TODO use `log::err` instead of panic
+use crate::log;
 
 use clap::Parser; // cargo add clap --features derive
 
@@ -34,14 +34,22 @@ pub fn get() -> Args {
     let args = Args::parse();
 
     if args.restart_at >= 24 {
-        panic!(
-            "invalid hour `{}`, needs to be less than 24",
-            args.restart_at
+        log::err(
+            &args.error_folder,
+            &format!(
+                "invalid hour `{}`, needs to be less than 24",
+                args.restart_at
+            ),
         );
+        panic!();
     }
 
     if args.restart_at == 0 {
-        panic!("restarting at midnight is not supported, sorry");
+        log::err(
+            &args.error_folder,
+            "restarting at midnight is not supported, sorry",
+        );
+        panic!();
     }
 
     args
