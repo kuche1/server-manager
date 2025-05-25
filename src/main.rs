@@ -3,61 +3,19 @@
 mod args;
 mod get_services;
 mod log;
+mod stop_services;
 mod sync_filesystem;
-mod wait;
-
-use std::process::Command;
+mod wait_until_its_time_to_restart;
 
 fn main() {
-    //// get args
-
     let args = args::get();
-
     let error_folder = &args.error_folder;
 
-    //// wait until it's time to restart
+    wait_until_its_time_to_restart::main(args.restart_at, args.check_time_sleep_sec);
 
-    wait::main(args.restart_at, args.check_time_sleep_sec);
+    let services = get_services::main(error_folder, &args.services_prefix);
 
-    //////
-    ////// get services
-    //////
-
-    let services = get_services::main(&error_folder, &args.services_prefix);
-
-    //////
-    ////// stop services
-    //////
-
-    for service in &services {
-        println!("stopping: {service}");
-
-        let cmd = match Command::new("systemctl").args(["stop", service]).output() {
-            Ok(v) => v,
-            Err(err) => {
-                log::err(
-                    error_folder,
-                    &format!(
-                        "could not call systemd to stop service `{}`: {}",
-                        service, err
-                    ),
-                );
-                continue;
-            }
-        };
-
-        if !cmd.status.success() {
-            log::err(
-                error_folder,
-                &format!(
-                    "could not stop service `{}`: {}; stderr=`{}`",
-                    service,
-                    cmd.status,
-                    String::from_utf8_lossy(&cmd.stderr)
-                ),
-            )
-        }
-    }
+    stop_services::main(error_folder, services);
 
     //////
     ////// TODO sync to server
