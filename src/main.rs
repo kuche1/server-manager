@@ -61,6 +61,10 @@ fn logerr(error_folder: &String, msg: &str) {
 }
 
 fn main() {
+    //////
+    ////// cmdline
+    //////
+
     let args = Args::parse();
 
     if args.restart_at >= 24 {
@@ -76,9 +80,11 @@ fn main() {
 
     let error_folder = &args.error_folder;
 
-    // {
-    //     // wait until it's time to restart
+    //////
+    ////// wait until it's time to restart
+    //////
 
+    // {
     //     let restart_at = args.restart_at;
     //     let sleep_sec = args.check_time_sleep_sec;
 
@@ -110,6 +116,10 @@ fn main() {
     //         }
     //     }
     // }
+
+    //////
+    ////// get services
+    //////
 
     let services = 'get_services: {
         let cmd = match Command::new("systemctl")
@@ -177,7 +187,10 @@ fn main() {
         services
     };
 
-    // stop the services
+    //////
+    ////// stop services
+    //////
+
     for service in &services {
         println!("stopping: {service}");
 
@@ -208,9 +221,15 @@ fn main() {
         }
     }
 
-    // TODO sync to server
+    //////
+    ////// TODO sync to server
+    //////
 
-    // TODO sync filesystem
+    //////
+    ////// TODO sync filesystem
+    //////
 
-    // TODO reboot
+    //////
+    ////// TODO reboot
+    //////
 }
