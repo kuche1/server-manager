@@ -1,4 +1,4 @@
-pub fn main(error_folder: &String) {
+pub fn main(error_folder: &String, server_ip: &String, server_user: &String) {
     todo!();
 
     // ping server

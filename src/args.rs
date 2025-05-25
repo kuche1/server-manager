@@ -21,11 +21,11 @@ pub struct Args {
 
     /// IP of the backup server
     #[arg(long)]
-    backup_ip: String,
+    pub backup_server_ip: String,
 
     /// user on the backup server
     #[arg(long)]
-    backup_user: String,
+    pub backup_server_user: String,
 }
 
 pub fn get() -> Args {

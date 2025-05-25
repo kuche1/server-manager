@@ -19,7 +19,11 @@ fn main() {
 
     stop_services::main(error_folder, services);
 
-    sync_to_backup_server::main(error_folder);
+    sync_to_backup_server::main(
+        error_folder,
+        &args.backup_server_ip,
+        &args.backup_server_user,
+    );
 
     sync_filesystem::main(error_folder);
 
