@@ -3,6 +3,7 @@
 mod args;
 mod get_services;
 mod log;
+mod reboot;
 mod stop_services;
 mod sync_filesystem;
 mod wait_until_its_time_to_restart;
@@ -35,7 +36,5 @@ fn main() {
 
     sync_filesystem::main(error_folder);
 
-    //////
-    ////// TODO reboot
-    //////
+    reboot::main();
 }
