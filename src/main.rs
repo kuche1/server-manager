@@ -1,5 +1,7 @@
 // needs to be run as root, as to be able to stop the services (and perform a restart)
 
+// TODO make a wrapper for Command instead of calling it a billion times
+
 mod args;
 mod get_services;
 mod log;
