@@ -3,7 +3,7 @@ use std::fs::File;
 use std::io::Write;
 
 // TODO untested
-pub fn err(error_folder: &String, msg: &str) {
+pub fn err(error_folder: &str, msg: &str) {
     eprintln!("ERROR: {msg}");
 
     if let Err(err) = fs::create_dir_all(error_folder) {

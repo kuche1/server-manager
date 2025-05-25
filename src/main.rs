@@ -4,6 +4,7 @@ mod args;
 mod get_services;
 mod log;
 mod reboot;
+mod rsync;
 mod stop_services;
 mod sync_filesystem;
 mod sync_to_backup_server;

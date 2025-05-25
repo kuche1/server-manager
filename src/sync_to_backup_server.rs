@@ -1,4 +1,5 @@
 use crate::log;
+use crate::rsync;
 
 use std::process::Command;
 
@@ -7,7 +8,7 @@ const SERVICE_FILES_LOCATION: &str = "/etc/systemd/system/";
 // actually, this is not the only place they can be, but this is good enough
 
 const BACKUP_SERVICE_FILES_LOCATION: &str = "etc_systemd_system";
-// located in home
+// relative to user's home
 
 fn server_is_dead(error_folder: &String, ip: &String) -> bool {
     // ping -c 1 IP
@@ -39,40 +40,13 @@ fn server_is_dead(error_folder: &String, ip: &String) -> bool {
 // TODO untested
 fn copy_service_files(error_folder: &String, server_ip: &String, server_user: &String) {
     println!("copying service files...");
-
-    let cmd = match Command::new("rsync")
-        .args([
-            "-av",
-            "--delete-after",
-            "--bwlimit=20480", // 20MiB
-            SERVICE_FILES_LOCATION,
-            &format!(
-                "{}@{}:{}",
-                server_user, server_ip, BACKUP_SERVICE_FILES_LOCATION
-            ),
-        ])
-        .output()
-    {
-        Ok(v) => v,
-        Err(err) => {
-            log::err(error_folder, &format!("could not call rsync: {}", err));
-            return;
-        }
-    };
-
-    if !cmd.status.success() {
-        log::err(
-            error_folder,
-            &format!(
-                "rsync failure for server `{}` user `{}`: {}; stderr=`{}`",
-                server_ip,
-                server_user,
-                cmd.status,
-                String::from_utf8_lossy(&cmd.stderr)
-            ),
-        );
-        return;
-    }
+    rsync::main(
+        error_folder,
+        SERVICE_FILES_LOCATION,
+        server_ip,
+        server_user,
+        BACKUP_SERVICE_FILES_LOCATION,
+    );
 }
 
 // TODO untested
