@@ -225,6 +225,12 @@ fn main() {
     ////// TODO sync to server
     //////
 
+    // ping server
+
+    // copy services
+
+    // copy files
+
     //////
     ////// sync filesystem
     //////
