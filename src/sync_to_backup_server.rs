@@ -8,6 +8,7 @@ const SERVICE_FILES_LOCATION: &str = "/etc/systemd/system/";
 // actually, this is not the only place they can be, but this is good enough
 
 const BACKUP_SERVICE_FILES_LOCATION: &str = "etc_systemd_system";
+// needs to not end with `/` (I think)
 // relative to user's home
 
 fn server_is_dead(error_folder: &String, ip: &String) -> bool {
