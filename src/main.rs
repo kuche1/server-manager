@@ -144,6 +144,8 @@ fn main() {
         let data = cmd.stdout;
         let data = String::from_utf8_lossy(&data);
 
+        let services_prefix = &args.services_prefix;
+
         let mut services = vec![];
 
         for line in data.lines() {
@@ -163,6 +165,10 @@ fn main() {
 
             let service_name = &line[0..idx + SERVICE_SUFFIX.len()];
 
+            if !service_name.starts_with(services_prefix) {
+                continue;
+            }
+
             services.push(service_name.to_owned());
         }
 
@@ -172,4 +178,10 @@ fn main() {
     for service in services {
         println!("service: {service}");
     }
+
+    // TODO shutdown services
+
+    // TODO sync
+
+    // TODO reboot
 }
