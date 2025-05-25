@@ -2,7 +2,6 @@ use std::fs;
 use std::fs::File;
 use std::io::Write;
 
-// TODO untested
 pub fn err(error_folder: &str, msg: &str) {
     eprintln!("ERROR: {msg}");
 
