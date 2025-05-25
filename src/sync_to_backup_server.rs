@@ -1,6 +1,6 @@
-use std::process::Command;
-
 use crate::log;
+
+use std::process::Command;
 
 // TODO untested
 fn server_is_dead(error_folder: &String, ip: &String) -> bool {

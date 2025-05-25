@@ -1,6 +1,6 @@
-use std::process::Command;
-
 use crate::log;
+
+use std::process::Command;
 
 const SERVICE_SUFFIX: &str = ".service";
 

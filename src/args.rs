@@ -1,3 +1,5 @@
+// TODO use `log::err` instead of panic
+
 use clap::Parser; // cargo add clap --features derive
 
 #[derive(Parser)]
