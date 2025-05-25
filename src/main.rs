@@ -246,6 +246,7 @@ fn main() {
 
         if !cmd.status.success() {
             logerr(error_folder, "sync failure");
+            break 'sync_filesystem;
         }
     }
 
