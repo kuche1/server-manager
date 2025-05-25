@@ -1,7 +1,7 @@
 // needs to be run as root, as to be able to stop the services (and perform a restart)
 
 use chrono::NaiveTime; // cargo add chrono
-use clap::{Parser, error}; // cargo add clap --features derive
+use clap::Parser; // cargo add clap --features derive
 use std::fs;
 use std::fs::File;
 use std::io::Write;
