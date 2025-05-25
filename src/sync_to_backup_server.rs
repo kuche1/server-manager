@@ -50,6 +50,9 @@ fn copy_service_files(error_folder: &String, server_ip: &String, server_user: &S
 }
 
 // TODO untested
+fn copy_data(error_folder: &String, server_ip: &String, server_user: &String) {}
+
+// TODO untested
 pub fn main(error_folder: &String, server_ip: &String, server_user: &String) {
     if server_is_dead(error_folder, server_ip) {
         log::err(
@@ -61,5 +64,5 @@ pub fn main(error_folder: &String, server_ip: &String, server_user: &String) {
 
     copy_service_files(error_folder, server_ip, server_user);
 
-    // TODO copy data
+    copy_data(error_folder, server_ip, server_user)
 }
