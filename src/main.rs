@@ -226,8 +226,22 @@ fn main() {
     //////
 
     //////
-    ////// TODO sync filesystem
+    ////// sync filesystem
     //////
+
+    'sync_filesystem: {
+        let cmd = match Command::new("sync").output() {
+            Ok(v) => v,
+            Err(err) => {
+                logerr(error_folder, &format!("could call sync: {}", err));
+                break 'sync_filesystem;
+            }
+        };
+
+        if !cmd.status.success() {
+            logerr(error_folder, "sync failure");
+        }
+    }
 
     //////
     ////// TODO reboot
