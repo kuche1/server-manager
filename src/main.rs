@@ -29,6 +29,14 @@ struct Args {
     /// Stop all services with this prefix before restarting
     #[arg(short, long)]
     services_prefix: String,
+
+    /// IP of the backup server
+    #[arg(long)]
+    backup_ip: String,
+
+    /// user on the backup server
+    #[arg(long)]
+    backup_user: String,
 }
 
 // untested
@@ -225,11 +233,13 @@ fn main() {
     ////// TODO sync to server
     //////
 
-    // ping server
+    {
+        // ping server
 
-    // copy services
+        // copy services
 
-    // copy files
+        // copy files
+    }
 
     //////
     ////// sync filesystem
