@@ -1,3 +1,3 @@
-pub fn main() {
+pub fn main(error_folder: &String) {
     todo!();
 }

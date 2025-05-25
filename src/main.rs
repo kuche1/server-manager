@@ -6,6 +6,7 @@ mod log;
 mod reboot;
 mod stop_services;
 mod sync_filesystem;
+mod sync_to_backup_server;
 mod wait_until_its_time_to_restart;
 
 fn main() {
@@ -18,23 +19,9 @@ fn main() {
 
     stop_services::main(error_folder, services);
 
-    //////
-    ////// TODO sync to server
-    //////
-
-    {
-        // ping server
-
-        // copy services
-
-        // copy files
-    }
-
-    //////
-    ////// sync filesystem
-    //////
+    sync_to_backup_server::main(error_folder);
 
     sync_filesystem::main(error_folder);
 
-    reboot::main();
+    reboot::main(error_folder);
 }
