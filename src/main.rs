@@ -1,7 +1,5 @@
 // needs to be run as root, as to be able to stop the services (and perform a restart)
 
-// TODO make a wrapper for Command instead of calling it a billion times
-
 mod args;
 mod get_services;
 mod log;
@@ -10,6 +8,7 @@ mod rsync;
 mod stop_services;
 mod sync_filesystem;
 mod sync_to_backup_server;
+mod term;
 mod wait_until_its_time_to_restart;
 
 fn main() {

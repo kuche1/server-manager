@@ -1,8 +1,9 @@
 use crate::log;
 use crate::rsync;
+use crate::term;
 
 use std::fs;
-use std::process::Command;
+// use std::process::Command;
 
 const SERVICE_FILES_LOCATION: &str = "/etc/systemd/system/";
 // needs to end with `/` (I think)
@@ -14,28 +15,35 @@ const BACKUP_SERVICE_FILES_LOCATION: &str = "etc_systemd_system";
 
 // TODO untested
 fn server_is_dead(error_folder: &String, ip: &String) -> bool {
-    let cmd = match Command::new("ping").args(["-c", "1", ip]).output() {
-        Ok(v) => v,
-        Err(err) => {
-            log::err(error_folder, &format!("could not call ping: {}", err));
-            return true;
-        }
-    };
-
-    if !cmd.status.success() {
-        log::err(
-            error_folder,
-            &format!(
-                "ping failure for server `{}`: {}; stderr=`{}`",
-                ip,
-                cmd.status,
-                String::from_utf8_lossy(&cmd.stderr)
-            ),
-        );
-        return true;
-    }
-
-    false
+    //     let cmd = match Command::new("ping").args(["-c", "1", ip]).output() {
+    //         Ok(v) => v,
+    //         Err(err) => {
+    //             log::err(error_folder, &format!("could not call ping: {}", err));
+    //             return true;
+    //         }
+    //     };
+    //
+    //     if !cmd.status.success() {
+    //         log::err(
+    //             error_folder,
+    //             &format!(
+    //                 "ping failure for server `{}`: {}; stderr=`{}`",
+    //                 ip,
+    //                 cmd.status,
+    //                 String::from_utf8_lossy(&cmd.stderr)
+    //             ),
+    //         );
+    //         return true;
+    //     }
+    //
+    //     false
+    term::exec(
+        error_folder,
+        "ping",
+        vec!["-c", "1", ip],
+        &format!("ping server `{ip}`"),
+    )
+    .is_none()
 }
 
 // TODO untested
