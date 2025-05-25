@@ -11,9 +11,8 @@ const BACKUP_SERVICE_FILES_LOCATION: &str = "etc_systemd_system";
 // needs to not end with `/` (I think)
 // relative to user's home
 
+// TODO untested
 fn server_is_dead(error_folder: &String, ip: &String) -> bool {
-    // ping -c 1 IP
-
     let cmd = match Command::new("ping").args(["-c", "1", ip]).output() {
         Ok(v) => v,
         Err(err) => {
