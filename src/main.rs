@@ -3,6 +3,7 @@
 mod args;
 mod get_services;
 mod log;
+mod sync_filesystem;
 mod wait;
 
 use std::process::Command;
@@ -74,20 +75,7 @@ fn main() {
     ////// sync filesystem
     //////
 
-    'sync_filesystem: {
-        let cmd = match Command::new("sync").output() {
-            Ok(v) => v,
-            Err(err) => {
-                log::err(error_folder, &format!("could call sync: {}", err));
-                break 'sync_filesystem;
-            }
-        };
-
-        if !cmd.status.success() {
-            log::err(error_folder, "sync failure");
-            break 'sync_filesystem;
-        }
-    }
+    sync_filesystem::main(error_folder);
 
     //////
     ////// TODO reboot
