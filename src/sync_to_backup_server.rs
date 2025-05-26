@@ -119,6 +119,15 @@ fn copy_data(error_folder: &String, server_ip: &String, server_user: &String) {
     println!("copy data: done!");
 }
 
+// TODO untested
+fn remove_deleted(error_folder: &String, server_ip: &String, server_user: &String) {
+    println!("remove deleted: working...");
+
+    rsync::remove_deleted(error_folder, "/home/", server_ip, server_user, "home");
+
+    println!("remove deleted: done!");
+}
+
 pub fn main(error_folder: &String, server_ip: &String, server_user: &String) {
     if server_is_dead(error_folder, server_ip) {
         log::err(
@@ -130,5 +139,7 @@ pub fn main(error_folder: &String, server_ip: &String, server_user: &String) {
 
     copy_service_files(error_folder, server_ip, server_user);
 
-    copy_data(error_folder, server_ip, server_user)
+    copy_data(error_folder, server_ip, server_user);
+
+    remove_deleted(error_folder, server_ip, server_user);
 }
