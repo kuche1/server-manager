@@ -19,11 +19,11 @@ pub struct Args {
     pub check_time_sleep_sec: u64,
 
     /// Stop "all" services with this regex before restarting
-    #[arg(short, long)]
+    #[arg(long)]
     pub services_regex: String,
 
     /// Exclude this service from being restarted
-    #[arg(short, long)]
+    #[arg(long)]
     pub service_exception: String,
 
     /// IP of the backup server
