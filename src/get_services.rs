@@ -6,6 +6,7 @@ use regex::Regex; // cargo add regex
 
 const SERVICE_SUFFIX: &str = ".service";
 
+// this seems to ignore the disabled services (which is not a problem)
 pub fn main(error_folder: &String, services_regex: &String) -> Vec<String> {
     let regex = match Regex::new(services_regex) {
         Ok(v) => v,

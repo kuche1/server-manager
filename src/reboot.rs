@@ -5,6 +5,8 @@ use crate::term;
 
 // TODO untested
 pub fn main(error_folder: &String) {
+    println!("reboot: working...");
+
     //     let cmd = match Command::new("reboot").output() {
     //         Ok(v) => v,
     //         Err(err) => {
@@ -25,4 +27,6 @@ pub fn main(error_folder: &String) {
     //         return;
     //     }
     term::exec(error_folder, "reboot", vec![], "reboot server");
+
+    println!("reboot: done! (error)");
 }
