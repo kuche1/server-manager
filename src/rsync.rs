@@ -15,11 +15,17 @@ fn rsync(
     let dest_path = &format!("{dest_user}@{dest_ip}:{dest_path}");
 
     let args = {
-        if recursive {
-            "-rlptgoD" // equivalent to `-a`, see `rsync --help`
-        } else {
-            "-dlptgoD" // same as above except not recursive (`d` instead of `r`)
-        }
+        // `-a` is equivalent to `-rlptgoD` (see `rsync --help`)
+        // `-r` recursive (or `-d` for non-recursive)
+        // `-l` preserve symlinks
+        // `-p` preserve permissions
+        // `-t` "preserve modification times"
+        // `-g` preserve group
+        // `-o` preserve owner
+        // `-D` "same as --devices --specials"
+        // `-N` "preserve create times (newness)"
+
+        if recursive { "-rlptgoD" } else { "-dlptgoD" }
     };
 
     term::exec(
