@@ -6,14 +6,14 @@ use std::fs;
 // use std::process::Command;
 
 const SERVICE_FILES_LOCATION: &str = "/etc/systemd/system/";
-// needs to end with `/` (I think)
+// needs to end with `/`
 // actually, this is not the only place they can be, but this is good enough
 
 const BACKUP_SERVICE_FILES_LOCATION: &str = "etc_systemd_system";
-// needs to not end with `/` (I think)
+// needs to not end with `/`
 // relative to user's home
 
-// TODO untested
+// TODO (alive branch tested) (dead branch untested)
 fn server_is_dead(error_folder: &String, ip: &String) -> bool {
     //     let cmd = match Command::new("ping").args(["-c", "1", ip]).output() {
     //         Ok(v) => v,
@@ -99,8 +99,8 @@ fn copy_data(error_folder: &String, server_ip: &String, server_user: &String) {
     }
 
     for user in users {
-        println!("user: {}", user);
-        let user_home = &format!("/home/{user}");
+        // println!("user: {}", user);
+        let user_home = &format!("/home/{user}/");
         let backup_folder = format!("home/{user}");
 
         rsync::main(
