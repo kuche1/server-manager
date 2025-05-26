@@ -9,7 +9,6 @@ fn rsync(
     dest_ip: &str,
     dest_user: &str,
     dest_user_home_relative_path: &str,
-    recursive: bool,
 ) {
     let dest_path = &format!("/home/{dest_user}/{dest_user_home_relative_path}");
     let dest_path = &format!("{dest_user}@{dest_ip}:{dest_path}");
@@ -21,13 +20,10 @@ fn rsync(
             "-av",
             "--delete-after",
             &format!("--bwlimit={BANDWIDTH_LIMIT_KIB}"),
-            &format!("--recursive={recursive}"),
             source_path,
             dest_path,
         ],
-        &format!(
-            "rsync [recursive={recursive}]: source_path=`{source_path}`, dest_path=`{dest_path}`",
-        ),
+        &format!("rsync: source_path=`{source_path}`, dest_path=`{dest_path}`",),
     );
 }
 
@@ -46,12 +42,12 @@ pub fn main(
         dest_ip,
         dest_user,
         dest_user_home_relative_path,
-        true,
     );
 
     println!("rsync: sync ({source_path}): done!");
 }
 
+// TODO this should actually just call rsync non-recuresively, instead of calling a regular rsync
 pub fn remove_deleted(
     error_folder: &String,
     source_path: &str,
@@ -67,7 +63,6 @@ pub fn remove_deleted(
         dest_ip,
         dest_user,
         dest_user_home_relative_path,
-        false,
     );
 
     println!("rsync: remove deleted ({source_path}): done!");
