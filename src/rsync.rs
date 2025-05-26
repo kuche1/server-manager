@@ -18,7 +18,7 @@ fn rsync(
         if recursive {
             "-rlptgoD" // equivalent to `-a`, see `rsync --help`
         } else {
-            "-lptgoD" // same thing but not recursive
+            "-dlptgoD" // same as above except not recursive (`d` instead of `r`)
         }
     };
 
@@ -33,7 +33,9 @@ fn rsync(
             source_path,
             dest_path,
         ],
-        &format!("rsync: source_path=`{source_path}`, dest_path=`{dest_path}`",),
+        &format!(
+            "rsync: source_path=`{source_path}`, dest_path=`{dest_path}`, recursive=`{recursive}`",
+        ),
     );
 }
 
