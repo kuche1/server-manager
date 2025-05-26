@@ -1,7 +1,7 @@
-use crate::log;
+// use crate::log;
 use crate::term;
 
-use std::process::Command;
+// use std::process::Command;
 
 // TODO untested
 pub fn main(
