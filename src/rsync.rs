@@ -13,7 +13,7 @@ pub fn main(
     let dest_path = &format!("/home/{dest_user}/{dest_user_home_relative_path}");
     let dest_path = &format!("{dest_user}@{dest_ip}:{dest_path}");
 
-    println!("rsync: `{source_path}` -> `{dest_path}`");
+    println!("rsync: {source_path} -> {dest_path}");
 
     //     let cmd = match Command::new("rsync")
     //         .args([
