@@ -3,7 +3,6 @@ use crate::term;
 
 // use std::process::Command;
 
-// TODO untested
 pub fn main(
     error_folder: &String,
     source_path: &str,

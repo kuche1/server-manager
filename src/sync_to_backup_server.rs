@@ -46,7 +46,6 @@ fn server_is_dead(error_folder: &String, ip: &String) -> bool {
     .is_none()
 }
 
-// TODO untested
 fn copy_service_files(error_folder: &String, server_ip: &String, server_user: &String) {
     println!("copying service files...");
     rsync::main(
@@ -58,7 +57,6 @@ fn copy_service_files(error_folder: &String, server_ip: &String, server_user: &S
     );
 }
 
-// TODO untested
 fn copy_data(error_folder: &String, server_ip: &String, server_user: &String) {
     let entries = match fs::read_dir("/home/") {
         Ok(v) => v,
@@ -113,7 +111,6 @@ fn copy_data(error_folder: &String, server_ip: &String, server_user: &String) {
     }
 }
 
-// TODO untested
 pub fn main(error_folder: &String, server_ip: &String, server_user: &String) {
     if server_is_dead(error_folder, server_ip) {
         log::err(
