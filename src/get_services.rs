@@ -7,7 +7,11 @@ use regex::Regex; // cargo add regex
 const SERVICE_SUFFIX: &str = ".service";
 
 // this seems to ignore the disabled services (which is not a problem)
-pub fn main(error_folder: &String, services_regex: &String) -> Vec<String> {
+pub fn main(
+    error_folder: &String,
+    services_regex: &String,
+    service_exception: &String,
+) -> Vec<String> {
     let regex = match Regex::new(services_regex) {
         Ok(v) => v,
         Err(err) => {
@@ -93,6 +97,10 @@ pub fn main(error_folder: &String, services_regex: &String) -> Vec<String> {
         let service_name = &line[0..idx + SERVICE_SUFFIX.len()];
 
         if !regex.is_match(service_name) {
+            continue;
+        }
+
+        if service_name == service_exception {
             continue;
         }
 

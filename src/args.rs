@@ -2,6 +2,7 @@ use crate::log;
 
 use clap::Parser; // cargo add clap --features derive
 
+// TODO? create the regex here, so that if it is bad we can catch it right away
 #[derive(Parser)]
 #[command(version, about, long_about = None)]
 pub struct Args {
@@ -17,9 +18,13 @@ pub struct Args {
     #[arg(long, default_value_t = 3000)] // 3000sec = 50min
     pub check_time_sleep_sec: u64,
 
-    /// Stop all services with this regex before restarting
+    /// Stop "all" services with this regex before restarting
     #[arg(short, long)]
     pub services_regex: String,
+
+    /// Exclude this service from being restarted
+    #[arg(short, long)]
+    pub service_exception: String,
 
     /// IP of the backup server
     #[arg(long)]
