@@ -9,15 +9,25 @@ fn rsync(
     dest_ip: &str,
     dest_user: &str,
     dest_user_home_relative_path: &str,
+    recursive: bool,
 ) {
     let dest_path = &format!("/home/{dest_user}/{dest_user_home_relative_path}");
     let dest_path = &format!("{dest_user}@{dest_ip}:{dest_path}");
+
+    let args = {
+        if recursive {
+            "-rlptgoD" // equivalent to `-a`, see `rsync --help`
+        } else {
+            "-lptgoD" // same thing but not recursive
+        }
+    };
 
     term::exec(
         error_folder,
         "rsync",
         vec![
-            "-av",
+            args,
+            // "-v", // verbose
             "--delete-after",
             &format!("--bwlimit={BANDWIDTH_LIMIT_KIB}"),
             source_path,
@@ -42,6 +52,7 @@ pub fn main(
         dest_ip,
         dest_user,
         dest_user_home_relative_path,
+        true,
     );
 
     println!("rsync: sync ({source_path}): done!");
@@ -63,6 +74,7 @@ pub fn remove_deleted(
         dest_ip,
         dest_user,
         dest_user_home_relative_path,
+        false,
     );
 
     println!("rsync: remove deleted ({source_path}): done!");
