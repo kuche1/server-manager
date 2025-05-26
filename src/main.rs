@@ -17,7 +17,7 @@ fn main() {
 
     wait_until_its_time_to_restart::main(args.restart_at, args.check_time_sleep_sec);
 
-    let services = get_services::main(error_folder, &args.services_prefix);
+    let services = get_services::main(error_folder, &args.services_regex);
 
     stop_services::main(error_folder, services);
 

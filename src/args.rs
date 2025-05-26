@@ -17,9 +17,9 @@ pub struct Args {
     #[arg(long, default_value_t = 3000)] // 3000sec = 50min
     pub check_time_sleep_sec: u64,
 
-    /// Stop all services with this prefix before restarting
+    /// Stop all services with this regex before restarting
     #[arg(short, long)]
-    pub services_prefix: String,
+    pub services_regex: String,
 
     /// IP of the backup server
     #[arg(long)]

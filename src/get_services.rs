@@ -1,11 +1,23 @@
 use crate::log;
 use crate::term;
 
+use regex::Regex; // cargo add regex
 // use std::process::Command;
 
 const SERVICE_SUFFIX: &str = ".service";
 
-pub fn main(error_folder: &String, services_prefix: &String) -> Vec<String> {
+pub fn main(error_folder: &String, services_regex: &String) -> Vec<String> {
+    let regex = match Regex::new(services_regex) {
+        Ok(v) => v,
+        Err(err) => {
+            log::err(
+                error_folder,
+                &format!("oriblem with regex `{services_regex}` -> {err}"),
+            );
+            return vec![];
+        }
+    };
+
     //     let cmd = match Command::new("systemctl")
     //         .args([
     //             "list-units",
@@ -79,7 +91,7 @@ pub fn main(error_folder: &String, services_prefix: &String) -> Vec<String> {
 
         let service_name = &line[0..idx + SERVICE_SUFFIX.len()];
 
-        if !service_name.starts_with(services_prefix) {
+        if !regex.is_match(service_name) {
             continue;
         }
 
