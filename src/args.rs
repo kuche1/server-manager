@@ -30,9 +30,13 @@ pub struct Args {
     #[arg(long)]
     pub backup_server_ip: String,
 
-    /// user on the backup server
+    /// User on the backup server
     #[arg(long)]
     pub backup_server_user: String,
+
+    /// Update the server, as if it is debian-based
+    #[arg(long, default_value_t = false)]
+    pub update_server_debian: bool,
 }
 
 pub fn get() -> Args {

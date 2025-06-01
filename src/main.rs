@@ -9,6 +9,7 @@ mod stop_services;
 mod sync_filesystem;
 mod sync_to_backup_server;
 mod term;
+mod update_server;
 mod wait_until_its_time_to_restart;
 
 fn main() {
@@ -20,6 +21,7 @@ fn main() {
     let services = get_services::main(error_folder, &args.services_regex, &args.service_exception);
 
     stop_services::main(error_folder, services);
+    sync_filesystem::main(error_folder);
 
     sync_to_backup_server::main(
         error_folder,
@@ -27,7 +29,9 @@ fn main() {
         &args.backup_server_user,
     );
 
+    update_server::main(error_folder, args.update_server_debian);
     sync_filesystem::main(error_folder);
 
+    sync_filesystem::main(error_folder);
     reboot::main(error_folder);
 }
