@@ -1,7 +1,6 @@
 use crate::term;
 
-const BANDWIDTH_LIMIT_KIB: u32 = 20480; // 20MiB
-// TODO concatinate at compiletime
+const RSYNC_ARG_BWLIMIT: &'static str = "--bwlimit=20480"; // 20MiB
 
 fn rsync(
     error_folder: &String,
@@ -35,7 +34,7 @@ fn rsync(
             args,
             // "-v", // verbose
             "--delete-after",
-            &format!("--bwlimit={BANDWIDTH_LIMIT_KIB}"),
+            RSYNC_ARG_BWLIMIT,
             source_path,
             dest_path,
         ],
