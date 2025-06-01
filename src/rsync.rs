@@ -66,7 +66,6 @@ pub fn main(
     println!("rsync: sync ({source_path}): done!");
 }
 
-// TODO this should actually just call rsync non-recuresively, instead of calling a regular rsync
 pub fn remove_deleted(
     error_folder: &String,
     source_path: &str,

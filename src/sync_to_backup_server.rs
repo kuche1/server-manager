@@ -1,6 +1,3 @@
-// TODO this will NOT sync deleted users (so, if a user gets deleted the old folder will stay on the backup server)
-//  we could simply sync the whole /home/
-
 use crate::log;
 use crate::rsync;
 use crate::term;
@@ -119,7 +116,6 @@ fn copy_data(error_folder: &String, server_ip: &String, server_user: &String) {
     println!("copy data: done!");
 }
 
-// TODO untested
 fn remove_deleted(error_folder: &String, server_ip: &String, server_user: &String) {
     println!("remove deleted: working...");
 
