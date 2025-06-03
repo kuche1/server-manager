@@ -7,14 +7,19 @@ pub fn main(error_folder: &String, update_server_debian: bool) {
 
     println!("update_server: debian: fetch updates: working...");
 
-    let res = term::exec(error_folder, "apt", vec!["update"], "debian: fetch updates");
+    let res = term::exec(
+        error_folder,
+        "apt-get",
+        vec!["update"],
+        "debian: fetch updates",
+    );
     if res.is_none() {
         return;
     }
 
     let res = term::exec(
         error_folder,
-        "apt",
+        "apt-get",
         vec!["upgrade"],
         "debian: apply updates",
     );
