@@ -20,7 +20,7 @@ pub fn main(error_folder: &String, update_server_debian: bool) {
     let res = term::exec(
         error_folder,
         "apt-get",
-        vec!["upgrade"],
+        vec!["upgrade", "--yes"],
         "debian: apply updates",
     );
     if res.is_none() {
