@@ -101,6 +101,7 @@ pub fn main(
         }
 
         if service_name == service_exception {
+            println!("skipping: {}", service_name);
             continue;
         }
 
