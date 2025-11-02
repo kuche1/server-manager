@@ -17,6 +17,10 @@ pub fn main(error_folder: &String, update_server_debian: bool) {
         return;
     }
 
+    println!("update_server: debian: fetch updates: done!");
+
+    println!("update_server: debian: apply updates: working...");
+
     let res = term::exec(
         error_folder,
         "apt-get",
@@ -27,5 +31,5 @@ pub fn main(error_folder: &String, update_server_debian: bool) {
         return;
     }
 
-    println!("update_server: debian: fetch updates: done!");
+    println!("update_server: debian: apply updates: done!");
 }
