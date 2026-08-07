@@ -37,6 +37,10 @@ pub struct Args {
     /// Update the server, as if it is debian-based
     #[arg(long, default_value_t = false)]
     pub update_server_debian: bool,
+
+    /// Debug
+    #[arg(long, default_value_t = false)]
+    pub debug_skip_time_check: bool,
 }
 
 pub fn get() -> Args {

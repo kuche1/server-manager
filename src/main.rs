@@ -1,5 +1,7 @@
 // needs to be run as root, as to be able to stop the services (and perform a restart)
 
+// TODO: this assumes that after this script has ran once systemd will call it again
+
 mod args;
 mod get_services;
 mod log;
@@ -18,7 +20,9 @@ fn main() {
     let error_folder = &args.error_folder;
     let do_update_distro_debian = args.update_server_debian; // TODO: ideally is this is False we would individually stop each service, then back it up to the backup server, then start it again, as to avoid downtime ALTHO this is no longer relevant now that I have added the option to not restart the server regardless
 
-    wait_until_its_time_to_work::main(args.restart_at, args.check_time_sleep_sec);
+    if !args.debug_skip_time_check {
+        wait_until_its_time_to_work::main(args.restart_at, args.check_time_sleep_sec);
+    }
 
     let services = get_services::main(error_folder, &args.services_regex, &args.service_exception);
 
