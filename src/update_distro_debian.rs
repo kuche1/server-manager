@@ -1,10 +1,6 @@
 use crate::term;
 
-pub fn main(error_folder: &String, update_server_debian: bool) {
-    if !update_server_debian {
-        return;
-    }
-
+pub fn main(error_folder: &String) {
     println!("update_server: debian: fetch updates: working...");
 
     let output = term::exec(
