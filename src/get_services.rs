@@ -17,7 +17,7 @@ pub fn main(
         Err(err) => {
             log::err(
                 error_folder,
-                &format!("oriblem with regex `{services_regex}` -> {err}"),
+                &format!("could not initialise regex `{services_regex}` -> {err}"),
             );
             return vec![];
         }
@@ -109,6 +109,9 @@ pub fn main(
     }
 
     println!("found {} services", services.len());
+
+    services.sort();
+    // this way you can sort your services by name in case one depends on another
 
     services
 }
