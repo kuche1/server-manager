@@ -108,5 +108,7 @@ pub fn main(
         services.push(service_name.to_owned());
     }
 
+    println!("found {} services", services.len());
+
     services
 }
