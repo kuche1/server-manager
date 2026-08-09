@@ -23,8 +23,9 @@ pub fn main(
     }
 
     for (service_idx, service) in services.iter().enumerate() {
-        println!("\n[{}/{}]", service_idx + 1, services.len());
-        println!("stopping: {service}");
+        println!("\n[{}/{}] {}", service_idx + 1, services.len(), service);
+
+        println!("stopping...");
 
         if dry_run {
         } else {
@@ -35,6 +36,8 @@ pub fn main(
                 &format!("stop service `{service}`"),
             );
         }
+
+        println!("stopped!");
 
         let idx = match users.iter().position(|u| u == service) {
             Some(v) => v,
@@ -50,14 +53,15 @@ pub fn main(
         }
     }
 
-    println!("{} users with no associated services", users.len());
+    println!("\n{} users with no associated services", users.len());
 
     users.sort();
 
     for (user_idx, user) in users.iter().enumerate() {
-        println!("\n[{}/{}]", user_idx + 1, users.len());
+        println!("\n[{}/{}] {}", user_idx + 1, users.len(), user);
         sync_to_backup_server::copy_user_data(error_folder, server_ip, server_user, dry_run, user);
     }
 
+    println("");
     sync_to_backup_server::remove_deleted_users(error_folder, server_ip, dry_run, server_user);
 }
