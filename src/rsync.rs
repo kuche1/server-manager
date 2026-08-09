@@ -56,7 +56,7 @@ pub fn main(
     dest_user: &str,
     dest_user_home_relative_path: &str,
 ) {
-    println!("    rsync: sync [{source_path}]: working...");
+    println!("    rsync: sync: working...");
 
     rsync(
         error_folder,
@@ -68,7 +68,7 @@ pub fn main(
         true,
     );
 
-    println!("    rsync: sync [{source_path}]: done!");
+    println!("    rsync: sync: done!");
 }
 
 pub fn remove_deleted(
