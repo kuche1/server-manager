@@ -40,7 +40,7 @@ pub fn main(error_folder: &String) -> Vec<String> {
         users.push(user.to_owned());
     }
 
-    users.sort();
+    // users.sort();
 
     return users;
 }

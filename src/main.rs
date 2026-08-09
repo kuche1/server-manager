@@ -8,9 +8,8 @@ mod get_users;
 mod log;
 mod reboot;
 mod rsync;
-mod start_services_if_enabled;
+mod start_service_if_enabled;
 mod stop_backup_start;
-mod stop_services;
 mod sync_filesystem;
 mod sync_to_backup_server;
 mod term;
@@ -31,28 +30,17 @@ fn main() {
         error_folder,
         &args.backup_server_ip,
         &args.backup_server_user,
-        do_update_distro_debian,
+        !do_update_distro_debian,
         args.dry_run,
         &services,
-        &users,
-    );
-
-    stop_services::main(error_folder, args.dry_run, &services);
-    sync_filesystem::main(error_folder, args.dry_run);
-
-    sync_to_backup_server::main(
-        error_folder,
-        &args.backup_server_ip,
-        &args.backup_server_user,
-        args.dry_run,
         users,
     );
+
+    sync_filesystem::main(error_folder, args.dry_run);
 
     if do_update_distro_debian {
         update_distro_debian::main(error_folder, args.dry_run);
         sync_filesystem::main(error_folder, args.dry_run);
         reboot::main(error_folder, args.dry_run);
-    } else {
-        start_services_if_enabled::main(error_folder, args.dry_run, &services);
     }
 }

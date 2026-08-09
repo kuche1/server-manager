@@ -1,4 +1,3 @@
-use crate::log;
 use crate::rsync;
 use crate::term;
 
@@ -13,7 +12,7 @@ const BACKUP_SERVICE_FILES_LOCATION: &str = "etc_systemd_system";
 // relative to user's home
 
 // TODO (alive branch tested) (dead branch untested)
-fn server_is_dead(error_folder: &String, ip: &String) -> bool {
+pub fn server_is_dead(error_folder: &String, ip: &String) -> bool {
     //     let cmd = match Command::new("ping").args(["-c", "1", ip]).output() {
     //         Ok(v) => v,
     //         Err(err) => {
@@ -45,7 +44,7 @@ fn server_is_dead(error_folder: &String, ip: &String) -> bool {
     .is_none()
 }
 
-fn copy_service_files(
+pub fn copy_service_files(
     error_folder: &String,
     dry_run: bool,
     server_ip: &String,
@@ -63,34 +62,36 @@ fn copy_service_files(
     println!("copy service files: done!");
 }
 
-fn copy_data(
+pub fn copy_user_data(
     error_folder: &String,
     server_ip: &String,
     server_user: &String,
     dry_run: bool,
-    users: Vec<String>,
+    user: &String,
 ) {
-    println!("copy data: working...");
+    println!("copy user data ({}): working...", user);
 
-    for user in users {
-        // println!("user: {}", user);
-        let user_home = &format!("/home/{user}/");
-        let backup_folder = format!("home/{user}");
+    let user_home = &format!("/home/{user}/");
+    let backup_folder = format!("home/{user}");
 
-        rsync::main(
-            error_folder,
-            dry_run,
-            user_home,
-            server_ip,
-            server_user,
-            &backup_folder,
-        );
-    }
+    rsync::main(
+        error_folder,
+        dry_run,
+        user_home,
+        server_ip,
+        server_user,
+        &backup_folder,
+    );
 
-    println!("copy data: done!");
+    println!("copy user data ({}): done!", user);
 }
 
-fn remove_deleted(error_folder: &String, dry_run: bool, server_ip: &String, server_user: &String) {
+pub fn remove_deleted_users(
+    error_folder: &String,
+    server_ip: &String,
+    dry_run: bool,
+    server_user: &String,
+) {
     println!("remove deleted: working...");
 
     rsync::remove_deleted(
@@ -103,26 +104,4 @@ fn remove_deleted(error_folder: &String, dry_run: bool, server_ip: &String, serv
     );
 
     println!("remove deleted: done!");
-}
-
-pub fn main(
-    error_folder: &String,
-    server_ip: &String,
-    server_user: &String,
-    dry_run: bool,
-    users: Vec<String>,
-) {
-    if server_is_dead(error_folder, server_ip) {
-        log::err(
-            error_folder,
-            "could not sync to backup server, as it is dead",
-        );
-        return;
-    }
-
-    copy_service_files(error_folder, dry_run, server_ip, server_user);
-
-    copy_data(error_folder, server_ip, server_user, dry_run, users);
-
-    remove_deleted(error_folder, dry_run, server_ip, server_user);
 }
