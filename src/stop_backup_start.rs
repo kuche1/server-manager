@@ -12,6 +12,8 @@ pub fn main(
     services: &Vec<String>,
     mut users: Vec<String>,
 ) {
+    println!("");
+
     let backup_server_is_alive = !sync_to_backup_server::server_is_dead(error_folder, server_ip);
 
     if !backup_server_is_alive {
