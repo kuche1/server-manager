@@ -75,8 +75,6 @@ pub fn remove_deleted(
     dest_user: &str,
     dest_user_home_relative_path: &str,
 ) {
-    println!("    rsync: remove deleted [{source_path}]: working...");
-
     rsync(
         error_folder,
         dry_run,
@@ -86,6 +84,4 @@ pub fn remove_deleted(
         dest_user_home_relative_path,
         false,
     );
-
-    println!("    rsync: remove deleted [{source_path}]: done!");
 }

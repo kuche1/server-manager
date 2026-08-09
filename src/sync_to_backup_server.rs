@@ -92,7 +92,7 @@ pub fn remove_deleted_users(
     dry_run: bool,
     server_user: &String,
 ) {
-    println!("remove deleted: working...");
+    println!("remove deleted users...");
 
     rsync::remove_deleted(
         error_folder,
@@ -103,5 +103,5 @@ pub fn remove_deleted_users(
         "home",
     );
 
-    println!("remove deleted: done!");
+    println!("    done!");
 }
