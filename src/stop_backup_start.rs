@@ -23,7 +23,7 @@ pub fn main(
     }
 
     for (service_idx, service) in services.iter().enumerate() {
-        println!("\n[{}/{}]", service_idx + 1, users.len());
+        println!("\n[{}/{}]", service_idx + 1, services.len());
         println!("stopping: {service}");
 
         if dry_run {
