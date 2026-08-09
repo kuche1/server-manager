@@ -50,7 +50,7 @@ fn is_enabled(error_folder: &String, service: &str) -> Option<bool> {
 }
 
 pub fn main(error_folder: &String, dry_run: bool, service: &String) {
-    println!("start service");
+    println!("start service...");
 
     let enabled = match is_enabled(error_folder, service) {
         Some(v) => v,
@@ -58,7 +58,6 @@ pub fn main(error_folder: &String, dry_run: bool, service: &String) {
     };
 
     if enabled {
-        println!("    starting...");
     } else {
         println!("    NOT starting disabled service!");
         return;
@@ -74,5 +73,5 @@ pub fn main(error_folder: &String, dry_run: bool, service: &String) {
         );
     }
 
-    println!("    started!");
+    println!("    done!");
 }
