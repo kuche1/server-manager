@@ -50,7 +50,7 @@ pub fn copy_service_files(
     server_ip: &String,
     server_user: &String,
 ) {
-    println!("copy service files: working...");
+    println!("copy service files...");
     rsync::main(
         error_folder,
         dry_run,
@@ -59,7 +59,7 @@ pub fn copy_service_files(
         server_user,
         BACKUP_SERVICE_FILES_LOCATION,
     );
-    println!("copy service files: done!");
+    println!("    done!");
 }
 
 pub fn copy_user_data(

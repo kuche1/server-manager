@@ -58,9 +58,9 @@ pub fn main(error_folder: &String, dry_run: bool, service: &String) {
     };
 
     if enabled {
-        println!("    starting");
+        println!("    starting...");
     } else {
-        println!("    NOT starting disabled service");
+        println!("    NOT starting disabled service!");
         return;
     }
 
@@ -74,5 +74,5 @@ pub fn main(error_folder: &String, dry_run: bool, service: &String) {
         );
     }
 
-    println!("    started");
+    println!("    started!");
 }
