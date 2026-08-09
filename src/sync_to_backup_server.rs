@@ -2,7 +2,6 @@ use crate::log;
 use crate::rsync;
 use crate::term;
 
-use std::fs;
 // use std::process::Command;
 
 const SERVICE_FILES_LOCATION: &str = "/etc/systemd/system/";
@@ -58,46 +57,8 @@ fn copy_service_files(error_folder: &String, server_ip: &String, server_user: &S
     println!("copy service files: done!");
 }
 
-fn copy_data(error_folder: &String, server_ip: &String, server_user: &String) {
+fn copy_data(error_folder: &String, server_ip: &String, server_user: &String, users: Vec<String>) {
     println!("copy data: working...");
-
-    let entries = match fs::read_dir("/home/") {
-        Ok(v) => v,
-        Err(err) => {
-            log::err(
-                error_folder,
-                &format!("could not get a list of users: {}", err),
-            );
-            return;
-        }
-    };
-
-    // println!("entries: {:?}", entries);
-    let mut users = vec![];
-
-    for entry in entries.flatten() {
-        let file_type = match entry.file_type() {
-            Ok(v) => v,
-            Err(_) => continue,
-        };
-
-        if !file_type.is_dir() {
-            continue;
-        }
-
-        let user = entry.file_name();
-
-        let user = match user.to_str() {
-            Some(v) => v,
-            None => {
-                log::err(&error_folder, "unreachable");
-                continue;
-            }
-        };
-
-        // println!("user: {}", user);
-        users.push(user.to_owned());
-    }
 
     for user in users {
         // println!("user: {}", user);
@@ -124,7 +85,7 @@ fn remove_deleted(error_folder: &String, server_ip: &String, server_user: &Strin
     println!("remove deleted: done!");
 }
 
-pub fn main(error_folder: &String, server_ip: &String, server_user: &String) {
+pub fn main(error_folder: &String, server_ip: &String, server_user: &String, users: Vec<String>) {
     if server_is_dead(error_folder, server_ip) {
         log::err(
             error_folder,
@@ -135,7 +96,7 @@ pub fn main(error_folder: &String, server_ip: &String, server_user: &String) {
 
     copy_service_files(error_folder, server_ip, server_user);
 
-    copy_data(error_folder, server_ip, server_user);
+    copy_data(error_folder, server_ip, server_user, users);
 
     remove_deleted(error_folder, server_ip, server_user);
 }

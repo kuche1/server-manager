@@ -4,6 +4,7 @@
 
 mod args;
 mod get_services;
+mod get_users;
 mod log;
 mod reboot;
 mod rsync;
@@ -25,6 +26,7 @@ fn main() {
     }
 
     let services = get_services::main(error_folder, &args.services_regex, &args.service_exception);
+    let users = get_users::main(error_folder);
 
     stop_services::main(error_folder, &services);
     sync_filesystem::main(error_folder);
@@ -33,6 +35,7 @@ fn main() {
         error_folder,
         &args.backup_server_ip,
         &args.backup_server_user,
+        users,
     );
 
     if do_update_distro_debian {
