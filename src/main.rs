@@ -9,6 +9,7 @@ mod log;
 mod reboot;
 mod rsync;
 mod start_services_if_enabled;
+mod stop_backup_start;
 mod stop_services;
 mod sync_filesystem;
 mod sync_to_backup_server;
@@ -25,6 +26,16 @@ fn main() {
 
     let services = get_services::main(error_folder, &args.services_regex, &args.service_exception);
     let users = get_users::main(error_folder);
+
+    stop_backup_start::main(
+        error_folder,
+        &args.backup_server_ip,
+        &args.backup_server_user,
+        do_update_distro_debian,
+        args.dry_run,
+        &services,
+        &users,
+    );
 
     stop_services::main(error_folder, args.dry_run, &services);
     sync_filesystem::main(error_folder, args.dry_run);
