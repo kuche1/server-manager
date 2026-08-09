@@ -1,6 +1,11 @@
 use crate::term;
 
-pub fn main(error_folder: &String) {
+pub fn main(error_folder: &String, dry_run: bool) {
+    if dry_run {
+        println!("dry run, skipping update");
+        return;
+    }
+
     println!("update_server: debian: fetch updates: working...");
 
     let output = term::exec(

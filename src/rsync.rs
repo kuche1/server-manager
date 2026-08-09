@@ -4,6 +4,7 @@ const RSYNC_ARG_BWLIMIT: &'static str = "--bwlimit=20480"; // 20MiB
 
 fn rsync(
     error_folder: &String,
+    dry_run: bool,
     source_path: &str,
     dest_ip: &str,
     dest_user: &str,
@@ -27,25 +28,29 @@ fn rsync(
         if recursive { "-rlptgoD" } else { "-dlptgoD" }
     };
 
-    term::exec(
-        error_folder,
-        "rsync",
-        vec![
-            args,
-            // "-v", // verbose
-            "--delete-after",
-            RSYNC_ARG_BWLIMIT,
-            source_path,
-            dest_path,
-        ],
-        &format!(
-            "rsync: source_path=`{source_path}`, dest_path=`{dest_path}`, recursive=`{recursive}`",
-        ),
-    );
+    if dry_run {
+    } else {
+        term::exec(
+            error_folder,
+            "rsync",
+            vec![
+                args,
+                // "-v", // verbose
+                "--delete-after",
+                RSYNC_ARG_BWLIMIT,
+                source_path,
+                dest_path,
+            ],
+            &format!(
+                "rsync: source_path=`{source_path}`, dest_path=`{dest_path}`, recursive=`{recursive}`",
+            ),
+        );
+    }
 }
 
 pub fn main(
     error_folder: &String,
+    dry_run: bool,
     source_path: &str,
     dest_ip: &str,
     dest_user: &str,
@@ -55,6 +60,7 @@ pub fn main(
 
     rsync(
         error_folder,
+        dry_run,
         source_path,
         dest_ip,
         dest_user,
@@ -67,6 +73,7 @@ pub fn main(
 
 pub fn remove_deleted(
     error_folder: &String,
+    dry_run: bool,
     source_path: &str,
     dest_ip: &str,
     dest_user: &str,
@@ -76,6 +83,7 @@ pub fn remove_deleted(
 
     rsync(
         error_folder,
+        dry_run,
         source_path,
         dest_ip,
         dest_user,

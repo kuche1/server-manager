@@ -45,10 +45,16 @@ fn server_is_dead(error_folder: &String, ip: &String) -> bool {
     .is_none()
 }
 
-fn copy_service_files(error_folder: &String, server_ip: &String, server_user: &String) {
+fn copy_service_files(
+    error_folder: &String,
+    dry_run: bool,
+    server_ip: &String,
+    server_user: &String,
+) {
     println!("copy service files: working...");
     rsync::main(
         error_folder,
+        dry_run,
         SERVICE_FILES_LOCATION,
         server_ip,
         server_user,
@@ -57,7 +63,13 @@ fn copy_service_files(error_folder: &String, server_ip: &String, server_user: &S
     println!("copy service files: done!");
 }
 
-fn copy_data(error_folder: &String, server_ip: &String, server_user: &String, users: Vec<String>) {
+fn copy_data(
+    error_folder: &String,
+    server_ip: &String,
+    server_user: &String,
+    dry_run: bool,
+    users: Vec<String>,
+) {
     println!("copy data: working...");
 
     for user in users {
@@ -67,6 +79,7 @@ fn copy_data(error_folder: &String, server_ip: &String, server_user: &String, us
 
         rsync::main(
             error_folder,
+            dry_run,
             user_home,
             server_ip,
             server_user,
@@ -77,15 +90,28 @@ fn copy_data(error_folder: &String, server_ip: &String, server_user: &String, us
     println!("copy data: done!");
 }
 
-fn remove_deleted(error_folder: &String, server_ip: &String, server_user: &String) {
+fn remove_deleted(error_folder: &String, dry_run: bool, server_ip: &String, server_user: &String) {
     println!("remove deleted: working...");
 
-    rsync::remove_deleted(error_folder, "/home/", server_ip, server_user, "home");
+    rsync::remove_deleted(
+        error_folder,
+        dry_run,
+        "/home/",
+        server_ip,
+        server_user,
+        "home",
+    );
 
     println!("remove deleted: done!");
 }
 
-pub fn main(error_folder: &String, server_ip: &String, server_user: &String, users: Vec<String>) {
+pub fn main(
+    error_folder: &String,
+    server_ip: &String,
+    server_user: &String,
+    dry_run: bool,
+    users: Vec<String>,
+) {
     if server_is_dead(error_folder, server_ip) {
         log::err(
             error_folder,
@@ -94,9 +120,9 @@ pub fn main(error_folder: &String, server_ip: &String, server_user: &String, use
         return;
     }
 
-    copy_service_files(error_folder, server_ip, server_user);
+    copy_service_files(error_folder, dry_run, server_ip, server_user);
 
-    copy_data(error_folder, server_ip, server_user, users);
+    copy_data(error_folder, server_ip, server_user, dry_run, users);
 
-    remove_deleted(error_folder, server_ip, server_user);
+    remove_deleted(error_folder, dry_run, server_ip, server_user);
 }

@@ -49,7 +49,7 @@ fn is_enabled(error_folder: &String, service: &str) -> Option<bool> {
     };
 }
 
-pub fn main(error_folder: &String, services: &Vec<String>) {
+pub fn main(error_folder: &String, dry_run: bool, services: &Vec<String>) {
     for service in services {
         let enabled = match is_enabled(error_folder, service) {
             Some(v) => v,
@@ -63,11 +63,14 @@ pub fn main(error_folder: &String, services: &Vec<String>) {
             continue;
         }
 
-        term::exec(
-            error_folder,
-            "systemctl",
-            vec!["start", service],
-            &format!("start service `{service}`"),
-        );
+        if dry_run {
+        } else {
+            term::exec(
+                error_folder,
+                "systemctl",
+                vec!["start", service],
+                &format!("start service `{service}`"),
+            );
+        }
     }
 }

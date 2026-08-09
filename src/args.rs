@@ -38,9 +38,13 @@ pub struct Args {
     #[arg(long, default_value_t = false)]
     pub update_server_debian: bool,
 
-    /// Debug
+    /// Debug, DO NOT SET
     #[arg(long, default_value_t = false)]
-    pub debug_skip_time_check: bool,
+    pub debug_do_not_set: bool,
+
+    /// Only pretend to perform the work
+    #[arg(long, default_value_t = false)]
+    pub dry_run: bool,
 }
 
 pub fn get() -> Args {
