@@ -22,7 +22,8 @@ pub fn main(
         sync_to_backup_server::copy_service_files(error_folder, dry_run, server_ip, server_user);
     }
 
-    for service in services {
+    for (service_idx, service) in services.iter().enumerate() {
+        println!("\n[{}/{}]", service_idx + 1, users.len());
         println!("stopping: {service}");
 
         if dry_run {
@@ -54,7 +55,7 @@ pub fn main(
     users.sort();
 
     for (user_idx, user) in users.iter().enumerate() {
-        println!("[{}/{}]", user_idx + 1, users.len());
+        println!("\n[{}/{}]", user_idx + 1, users.len());
         sync_to_backup_server::copy_user_data(error_folder, server_ip, server_user, dry_run, user);
     }
 
