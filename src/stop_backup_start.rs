@@ -27,7 +27,7 @@ pub fn main(
     for (service_idx, service) in services.iter().enumerate() {
         println!("\n[{}/{}] {}", service_idx + 1, services.len(), service);
 
-        println!("stopping...");
+        println!("stopping service...");
 
         if dry_run {
         } else {
@@ -39,11 +39,16 @@ pub fn main(
             );
         }
 
-        println!("stopped!");
+        println!("stopped service!");
 
         let idx = match users.iter().position(|u| u == service) {
             Some(v) => v,
-            None => continue,
+            None => {
+                println!(
+                    "no associated user was found for this service, skipping sync to backup server"
+                );
+                continue;
+            }
         };
 
         let user = users.swap_remove(idx);
