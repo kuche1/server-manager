@@ -62,6 +62,6 @@ pub fn main(
         sync_to_backup_server::copy_user_data(error_folder, server_ip, server_user, dry_run, user);
     }
 
-    println("");
+    println!("");
     sync_to_backup_server::remove_deleted_users(error_folder, server_ip, dry_run, server_user);
 }
