@@ -69,7 +69,7 @@ pub fn copy_user_data(
     dry_run: bool,
     user: &String,
 ) {
-    println!("copy user data ({}): working...", user);
+    println!("copy user data [{}]: working...", user);
 
     let user_home = &format!("/home/{user}/");
     let backup_folder = format!("home/{user}");
@@ -83,7 +83,7 @@ pub fn copy_user_data(
         &backup_folder,
     );
 
-    println!("copy user data ({}): done!", user);
+    println!("copy user data [{}]: done!", user);
 }
 
 pub fn remove_deleted_users(
