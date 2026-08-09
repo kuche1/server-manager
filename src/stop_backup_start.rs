@@ -27,7 +27,7 @@ pub fn main(
     for (service_idx, service) in services.iter().enumerate() {
         println!("\n[{}/{}] {}", service_idx + 1, services.len(), service);
 
-        println!("stopping service...");
+        println!("stop service...");
 
         if dry_run {
         } else {
@@ -39,7 +39,7 @@ pub fn main(
             );
         }
 
-        println!("stopped service!");
+        println!("    done!");
 
         let idx = match users.iter().position(|u| u == service) {
             Some(v) => v,
