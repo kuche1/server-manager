@@ -94,7 +94,8 @@ pub fn main(
             }
         };
 
-        let service_name = &line[0..idx + SERVICE_SUFFIX.len()];
+        let service_name = &line[0..idx]; // do not include `.service`
+        // let service_name = &line[0..idx + SERVICE_SUFFIX.len()];
 
         if !regex.is_match(service_name) {
             continue;
