@@ -40,6 +40,8 @@ pub fn main(error_folder: &String) -> Vec<String> {
         users.push(user.to_owned());
     }
 
+    println!("\nfound {} users", users.len());
+
     // users.sort();
 
     return users;

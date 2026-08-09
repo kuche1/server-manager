@@ -109,7 +109,7 @@ pub fn main(
         services.push(service_name.to_owned());
     }
 
-    println!("found {} services", services.len());
+    println!("\nfound {} services", services.len());
 
     services.sort();
     // this way you can sort your services by name in case one depends on another
