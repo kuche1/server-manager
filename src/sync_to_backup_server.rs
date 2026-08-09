@@ -83,7 +83,7 @@ pub fn copy_user_data(
         &backup_folder,
     );
 
-    println!("copied user data!");
+    println!("    done!");
 }
 
 pub fn remove_deleted_users(
