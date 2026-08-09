@@ -38,9 +38,9 @@ pub struct Args {
     #[arg(long, default_value_t = false)]
     pub update_server_debian: bool,
 
-    /// Debug, DO NOT SET
+    /// Skip the time check
     #[arg(long, default_value_t = false)]
-    pub debug_do_not_set: bool,
+    pub debug_skip_time_check: bool,
 
     /// Only pretend to perform the work
     #[arg(long, default_value_t = false)]

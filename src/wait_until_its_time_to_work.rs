@@ -3,9 +3,9 @@ use chrono::offset::Local;
 use std::thread;
 use std::time::Duration;
 
-pub fn main(restart_at: u8, check_time_sleep_sec: u64, dry_run: bool) {
-    if dry_run {
-        println!("dry run, skipping sleep");
+pub fn main(restart_at: u8, check_time_sleep_sec: u64, skip: bool) {
+    if skip {
+        println!("skipping time check");
         return;
     }
 
