@@ -4,11 +4,12 @@
 
 mod args;
 mod get_services;
+mod get_users;
 mod log;
 mod reboot;
 mod rsync;
-mod start_services_if_enabled;
-mod stop_services;
+mod start_service_if_enabled;
+mod stop_backup_start;
 mod sync_filesystem;
 mod sync_to_backup_server;
 mod term;
@@ -20,26 +21,30 @@ fn main() {
     let error_folder = &args.error_folder;
     let do_update_distro_debian = args.update_server_debian; // TODO: ideally is this is False we would individually stop each service, then back it up to the backup server, then start it again, as to avoid downtime ALTHO this is no longer relevant now that I have added the option to not restart the server regardless
 
-    if !args.debug_skip_time_check {
-        wait_until_its_time_to_work::main(args.restart_at, args.check_time_sleep_sec);
-    }
+    wait_until_its_time_to_work::main(
+        args.restart_at,
+        args.check_time_sleep_sec,
+        args.dry_run || args.debug_skip_time_check,
+    );
 
     let services = get_services::main(error_folder, &args.services_regex, &args.service_exception);
+    let users = get_users::main(error_folder);
 
-    stop_services::main(error_folder, &services);
-    sync_filesystem::main(error_folder);
-
-    sync_to_backup_server::main(
+    stop_backup_start::main(
         error_folder,
         &args.backup_server_ip,
         &args.backup_server_user,
+        !do_update_distro_debian,
+        args.dry_run,
+        &services,
+        users,
     );
 
+    sync_filesystem::main(error_folder, args.dry_run);
+
     if do_update_distro_debian {
-        update_distro_debian::main(error_folder);
-        sync_filesystem::main(error_folder);
-        reboot::main(error_folder);
-    } else {
-        start_services_if_enabled::main(error_folder, &services);
+        update_distro_debian::main(error_folder, args.dry_run);
+        sync_filesystem::main(error_folder, args.dry_run);
+        reboot::main(error_folder, args.dry_run);
     }
 }

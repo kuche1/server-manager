@@ -94,7 +94,8 @@ pub fn main(
             }
         };
 
-        let service_name = &line[0..idx + SERVICE_SUFFIX.len()];
+        let service_name = &line[0..idx]; // do not include `.service`
+        // let service_name = &line[0..idx + SERVICE_SUFFIX.len()];
 
         if !regex.is_match(service_name) {
             continue;
@@ -108,7 +109,7 @@ pub fn main(
         services.push(service_name.to_owned());
     }
 
-    println!("found {} services", services.len());
+    println!("\nfound {} services", services.len());
 
     services.sort();
     // this way you can sort your services by name in case one depends on another

@@ -1,9 +1,12 @@
 use crate::term;
 
-pub fn main(error_folder: &String) {
-    println!("sync filesystem: working...");
+pub fn main(error_folder: &String, dry_run: bool) {
+    println!("\nsync filesystem...");
 
-    term::exec(error_folder, "sync", vec![], "sync filesystem");
+    if dry_run {
+    } else {
+        term::exec(error_folder, "sync", vec![], "sync filesystem");
+    }
 
-    println!("sync filesystem: done!");
+    println!("    done!");
 }
